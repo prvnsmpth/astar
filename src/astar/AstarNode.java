@@ -20,15 +20,18 @@ public abstract class AstarNode {
     public int gscore;
     public int hscore;
     
-    public boolean isStartNode;
-    public boolean isGoalNode;
-    ArrayList<AstarNode> successors; 
+    protected ArrayList<AstarNode> successors; 
     
     /*
      *  predecessor node.
      *  Needed to retrace path once search completes.
      */
     public AstarNode predecessor;
+    
+    public void addSuccessor(AstarNode a)
+    {
+        successors.add(a);
+    }
     
     public void setSuccessors(ArrayList<AstarNode> alist)
     {

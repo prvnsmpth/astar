@@ -27,7 +27,7 @@ public abstract class Astar {
      *  node list.
      *  This will be needed for an informed search implementation
      */
-    ArrayList<AstarNode> nodeList;
+    protected ArrayList<AstarNode> nodeList;
     
     /*
      *  the open and closed lists
@@ -42,6 +42,19 @@ public abstract class Astar {
     public void init()
     {
         
+    }
+    
+    /*
+     *  set start and goal nodes
+     */
+    public void setStart(AstarNode a)
+    {
+        start = a;
+    }
+    
+    public void setGoal(AstarNode a)
+    {
+        goal = a;
     }
     
     /*

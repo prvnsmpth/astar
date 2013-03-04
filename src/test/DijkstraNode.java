@@ -12,23 +12,37 @@ import java.util.ArrayList;
  * @author raghavsagar
  */
 public class DijkstraNode extends AstarNode {
+    
+    public int id;    
+    
+    public DijkstraNode(int id)
+    {
+        this.id = id; 
+        successors = new ArrayList<>();
+    }    
+    
     @Override
-    public ArrayList<AstarNode> computeSuccessors() {
-        
+    public ArrayList<AstarNode> computeSuccessors() 
+    {
+        return successors;
     }
 
     @Override
-    public boolean equals(AstarNode a) {
-        
+    public boolean equals(AstarNode a) 
+    {
+        DijkstraNode d = (DijkstraNode) a;
+        return id == d.id;
     }
 
     @Override
-    public int distance(AstarNode a) {
-        
+    public void printNode() 
+    {
+        System.out.println("Node <" + id + ">");
     }
 
     @Override
-    public int heuristicEstimate(AstarNode a) {
-        return 0;
+    public int distance(AstarNode a) 
+    {
+        return 1;
     }
 }
