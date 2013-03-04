@@ -61,10 +61,17 @@ public abstract class Astar {
             
             if (curnode.equals(goal)) {
                 
-                System.out.println("The search was successful.");
-                ArrayList<AstarNode> path = reconstructPath();
+                System.out.println("The search was successful.\n");
+                ArrayList<AstarNode> path = reconstructPath(curnode.predecessor, curnode);
                 
                 // print out the path
+                Iterator<AstarNode> it = path.iterator();
+                while (it.hasNext())
+                {
+                    AstarNode node = it.next();
+                    node.printNode();
+                    System.out.println("\n");
+                }
                 return true;
             }
                         
@@ -95,7 +102,7 @@ public abstract class Astar {
                 {
                     successor.predecessor = curnode;
                     successor.gscore = temp_g_score;
-                    successor.hscore = successor.heuristicEstimate(goal);
+                    successor.hscore = heuristicEstimate(successor, goal);
                     
                     // if not in openList, add
                     if (!openList.contains(successor))
@@ -113,10 +120,15 @@ public abstract class Astar {
     /*
      *  reconstruct the path from start to goal
      */
-    public ArrayList<AstarNode> reconstructPath()
+    public ArrayList<AstarNode> reconstructPath(AstarNode parent, AstarNode node)
     {
-        
-        return null;
+        ArrayList<AstarNode> path;
+        if (parent.predecessor != null)       
+            path = reconstructPath(parent.predecessor, parent);                    
+        else        
+            path = new ArrayList<>();        
+        path.add(node);
+        return path;
     }
     
     /*

@@ -24,8 +24,5 @@ public class FscoreComparator implements Comparator<AstarNode> {
             return 0;        
         else        
             return 1;        
-    }
-    
-    
-    
+    } 
 }

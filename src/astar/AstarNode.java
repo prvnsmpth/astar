@@ -44,10 +44,10 @@ public abstract class AstarNode {
     
     /*
      *  abstract functions to be over-riden by implementations.
-     */
-    public abstract ArrayList<AstarNode> computeSuccessors();
+     */        
+    public abstract ArrayList<AstarNode> computeSuccessors(); /* needed for blind search */
     public abstract boolean equals(AstarNode a);
     public abstract int distance(AstarNode a);
-    public abstract int heuristicEstimate(AstarNode a);
+    public abstract void printNode(); /* A method to display the node */
     
 }
