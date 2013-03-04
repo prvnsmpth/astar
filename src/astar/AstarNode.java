@@ -5,6 +5,7 @@
 package astar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -21,6 +22,7 @@ public abstract class AstarNode {
     public int hscore;
     
     protected ArrayList<AstarNode> successors; 
+    protected HashMap<AstarNode, Integer> successorDistance;
     
     /*
      *  predecessor node.
@@ -28,9 +30,10 @@ public abstract class AstarNode {
      */
     public AstarNode predecessor;
     
-    public void addSuccessor(AstarNode a)
+    public void addSuccessor(AstarNode a, int dist)
     {
         successors.add(a);
+        successorDistance.put(a, dist);
     }
     
     public void setSuccessors(ArrayList<AstarNode> alist)
@@ -45,12 +48,16 @@ public abstract class AstarNode {
         return successors;
     }
     
+    public int getSuccessorDistance(AstarNode a)
+    {
+        return successorDistance.get(a);
+    }
+    
     /*
      *  abstract functions to be over-riden by implementations.
      */        
     public abstract ArrayList<AstarNode> computeSuccessors(); /* needed for blind search */
     public abstract boolean equals(AstarNode a);
-    public abstract int distance(AstarNode a);
     public abstract void printNode(); /* A method to display the node */
     
 }

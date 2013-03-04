@@ -6,6 +6,7 @@ package test;
 
 import astar.AstarNode;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -19,6 +20,7 @@ public class DijkstraNode extends AstarNode {
     {
         this.id = id; 
         successors = new ArrayList<>();
+        successorDistance = new HashMap<>();
     }    
     
     @Override
@@ -31,18 +33,13 @@ public class DijkstraNode extends AstarNode {
     public boolean equals(AstarNode a) 
     {
         DijkstraNode d = (DijkstraNode) a;
-        return id == d.id;
+        return (id == d.id);
     }
 
     @Override
     public void printNode() 
     {
-        System.out.println("Node <" + id + ">");
+        System.out.print("Node <" + id + ">");
     }
 
-    @Override
-    public int distance(AstarNode a) 
-    {
-        return 1;
-    }
 }

@@ -71,10 +71,9 @@ public abstract class Astar {
         while (!openList.isEmpty())
         {
             AstarNode curnode = openList.poll();
-            
             if (curnode.equals(goal)) {
                 
-                System.out.println("The search was successful.\n");
+                System.out.println("The search was successful. The path:\n");
                 ArrayList<AstarNode> path = reconstructPath(curnode.predecessor, curnode);
                 
                 // print out the path
@@ -98,7 +97,7 @@ public abstract class Astar {
             while (it.hasNext())
             {
                 AstarNode successor = it.next();
-                int temp_g_score = successor.gscore + successor.distance(curnode);
+                int temp_g_score = successor.gscore + successor.getSuccessorDistance(curnode);
              
                 /*
                  * check if successor is in the closedList, and already has a better
@@ -136,7 +135,7 @@ public abstract class Astar {
     public ArrayList<AstarNode> reconstructPath(AstarNode parent, AstarNode node)
     {
         ArrayList<AstarNode> path;
-        if (parent.predecessor != null)       
+        if (parent != null)       
             path = reconstructPath(parent.predecessor, parent);                    
         else        
             path = new ArrayList<>();        
