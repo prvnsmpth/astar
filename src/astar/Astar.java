@@ -45,7 +45,7 @@ public abstract class Astar {
     }
     
     /*
-     *  set start and goal nodes
+     *  specify start and goal nodes
      */
     public void setStart(AstarNode a)
     {
@@ -73,7 +73,7 @@ public abstract class Astar {
             AstarNode curnode = openList.poll();
             if (curnode.equals(goal)) {
                 
-                System.out.println("The search was successful. The path:\n");
+                System.out.println("Search was successful. The path:\n");
                 ArrayList<AstarNode> path = reconstructPath(curnode.predecessor, curnode);
                 
                 // print out the path
