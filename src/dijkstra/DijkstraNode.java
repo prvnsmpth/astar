@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+package dijkstra;
 
 import astar.AstarNode;
 import java.util.ArrayList;
@@ -30,16 +30,19 @@ public class DijkstraNode extends AstarNode {
     }
 
     @Override
-    public boolean equals(AstarNode a) 
-    {
-        DijkstraNode d = (DijkstraNode) a;
-        return (id == d.id);
-    }
-
-    @Override
     public void printNode() 
     {
         System.out.print("Node <" + id + ">");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public int hashCode() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

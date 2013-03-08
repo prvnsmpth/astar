@@ -5,8 +5,11 @@
 package astar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.PriorityQueue;
+import utils.Pair;
 
 /**
  *
@@ -37,14 +40,6 @@ public abstract class Astar {
     FscoreComparator comparator;
     
     /*
-     *  Initialize scores for all nodes
-     */
-    public void init()
-    {
-        
-    }
-    
-    /*
      *  specify start and goal nodes
      */
     public void setStart(AstarNode a)
@@ -58,6 +53,36 @@ public abstract class Astar {
     }
     
     /*
+     *  build the node list
+     *  Useful for informed search
+     */
+    public void buildNodeList(ArrayList<AstarNode> list, HashMap<Pair<AstarNode, AstarNode>, Integer> edges)            
+    {
+        Iterator<AstarNode> i = list.iterator();
+        while (i.hasNext())
+        {
+            AstarNode a = i.next();
+            Iterator<Entry<Pair<AstarNode, AstarNode>, Integer>> 
+                    j = edges.entrySet().iterator();
+            while (j.hasNext())
+            {
+                Entry<Pair<AstarNode, AstarNode>, Integer> entry = j.next();
+                if (entry.getKey().getFirst().equals(a))                        
+                {
+                    a.addSuccessor(entry.getKey().getSecond(), entry.getValue());
+                }
+                else if (entry.getKey().getSecond().equals(a))
+                {
+                    a.addSuccessor(entry.getKey().getFirst(), entry.getValue());
+                }
+                
+                nodeList.add(a);
+            }
+        }
+    }
+    
+    
+    /*
      *  Search for the goal node using Astar search algorithm.
      *  Returns true on successful search, false on failure 
      */
@@ -68,11 +93,16 @@ public abstract class Astar {
         closedList = new ArrayList<>();
         openList.add(start);
         
+        System.out.println("Start board position:");
+        start.printNode();
+        System.out.println("Goal:");
+        goal.printNode();
+        
         while (!openList.isEmpty())
         {
             AstarNode curnode = openList.poll();
-            if (curnode.equals(goal)) {
-                
+            if (curnode.equals(goal)) 
+            {                
                 System.out.println("Search was successful. The path:\n");
                 ArrayList<AstarNode> path = reconstructPath(curnode.predecessor, curnode);
                 
@@ -88,6 +118,8 @@ public abstract class Astar {
             }
                         
             closedList.add(curnode);
+            curnode.printNode();
+            System.out.println("F-score: " + curnode.fscore);
             
             /* 
              * get successors of curnode; and set all their scores             
@@ -104,7 +136,9 @@ public abstract class Astar {
                  * distance-from-start score
                  */
                 if (closedList.contains(successor) && temp_g_score >= successor.gscore)
+                {
                     continue;
+                }
                 
                 /*
                  * we update the g and h scores if the successor has not been 
@@ -114,18 +148,16 @@ public abstract class Astar {
                 {
                     successor.predecessor = curnode;
                     successor.gscore = temp_g_score;
-                    successor.hscore = heuristicEstimate(successor, goal);
+                    successor.fscore = temp_g_score + heuristicEstimate(successor, goal);                    
                     
-                    // if not in openList, add
+                    /* if not in openList, add */
                     if (!openList.contains(successor))
                         openList.add(successor);                                        
                 }
                 
             }
-            
         }
-        
-        
+                
         return false;
     }
     

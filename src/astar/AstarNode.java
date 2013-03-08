@@ -19,7 +19,7 @@ public abstract class AstarNode {
      *  scores
      */
     public int gscore;
-    public int hscore;
+    public int fscore;
     
     protected ArrayList<AstarNode> successors; 
     protected HashMap<AstarNode, Integer> successorDistance;
@@ -43,21 +43,24 @@ public abstract class AstarNode {
     
     public ArrayList<AstarNode> getSuccessors()
     {
-        if (successors == null)
+        if (successors == null || successors.isEmpty())
             successors = computeSuccessors();
         return successors;
     }
     
     public int getSuccessorDistance(AstarNode a)
     {
-        return successorDistance.get(a);
+        return 1;
     }
     
     /*
      *  abstract functions to be over-riden by implementations.
      */        
     public abstract ArrayList<AstarNode> computeSuccessors(); /* needed for blind search */
-    public abstract boolean equals(AstarNode a);
     public abstract void printNode(); /* A method to display the node */
+    @Override
+    public abstract boolean equals(Object o);
+    @Override
+    public abstract int hashCode();
     
 }

@@ -14,13 +14,10 @@ public class FscoreComparator implements Comparator<AstarNode> {
 
     @Override
     public int compare(AstarNode a, AstarNode b) 
-    {
-        int afscore = a.gscore + a.hscore;
-        int bfscore = b.gscore + b.hscore;
-        
-        if (afscore < bfscore)
+    {   
+        if (a.fscore < b.fscore)
             return -1;        
-        else if (afscore == bfscore)        
+        else if (a.fscore == b.fscore)        
             return 0;        
         else        
             return 1;        
