@@ -16,31 +16,53 @@ import utils.Pair;
  */
 public class EightTiles extends Astar {
     
-    public EightTiles()
+    public static final int MANHATTAN = 0;
+    public static final int DISPLACED_TILES = 1;
+    private int heuristic;
+    
+    public EightTiles(int heuristic)
     {
+        // create start node
         EightTilesNode node = new EightTilesNode();
         this.setStart(node);
         
+        // create goal node
         EightTilesNode gnode = new EightTilesNode(new ArrayList<> 
-                (Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, EightTilesNode.EMPTY_TILE)));
-        this.setGoal(gnode);
+                (Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, EightTilesNode.EMPTY_TILE)));        
+        this.setGoal(gnode);     
+        
+        // set heuristic
+        this.heuristic = heuristic;
     }
-    
-    public EightTiles(ArrayList<Integer> config)
+        
+    public EightTiles(ArrayList<Integer> config, int heuristic)
     {
+        // create start node
         EightTilesNode node = new EightTilesNode(config);
         this.setStart(node);
         
+        // create goal node
         EightTilesNode gnode = new EightTilesNode(new ArrayList<> 
                 (Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, EightTilesNode.EMPTY_TILE)));
         this.setGoal(gnode);
+        
+        // set heuristic
+        this.heuristic = heuristic;
     }
-
-    @Override
+    
     /*
-     *  Based on Manhattan Distance of tiles
+     *  set the heuristic method
      */
-    public int heuristicEstimate(AstarNode a, AstarNode b) 
+    public void setHeuristic(int heuristic)
+    {
+        this.heuristic = heuristic;
+    }
+    
+    /*
+     *  Returns the sum of the manhattan distances of tiles in
+     *  board position 'a' to the corresponding tiles in 'b'
+     */
+    private int manhattanHeuristic(AstarNode a, AstarNode b)
     {
         int cost = 0;
         EightTilesNode anode = (EightTilesNode) a;
@@ -55,7 +77,45 @@ public class EightTiles extends Astar {
                 cost += Math.abs(coord.getFirst() - i) + Math.abs(coord.getSecond() - j);
             }
         }
+        return cost;
+    }
+    
+    /*
+     *  Returns the number of tiles in 'a' that are displaced w.r.t 'b'
+     */
+    private int displacedTilesHeuristic(AstarNode a, AstarNode b)
+    {
+        int cost = 0;
+        EightTilesNode anode = (EightTilesNode) a;
+        EightTilesNode bnode = (EightTilesNode) b;
         
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {   
+                if (anode.getTileAt(i, j) != bnode.getTileAt(i, j))
+                    cost++;
+            }
+        }
+        
+        return cost;
+    }
+
+    @Override
+    /*
+     *  Either manhtattan distance or the displaced tiles heuristic
+     */
+    public int heuristicEstimate(AstarNode a, AstarNode b) 
+    {
+        int cost = 0;
+        if (heuristic == MANHATTAN)
+        {
+            cost = manhattanHeuristic(a, b); 
+        }
+        else if (heuristic == DISPLACED_TILES)
+        {
+            cost = displacedTilesHeuristic(a, b);                        
+        }
         return cost;
     }
     

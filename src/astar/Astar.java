@@ -24,13 +24,7 @@ public abstract class Astar {
      *  initialize these to appropriate values
      */
     AstarNode start;
-    AstarNode goal;
-    
-    /*
-     *  node list.
-     *  This will be needed for an informed search implementation
-     */
-    protected ArrayList<AstarNode> nodeList;
+    AstarNode goal;    
     
     /*
      *  the open and closed lists
@@ -38,6 +32,18 @@ public abstract class Astar {
     PriorityQueue<AstarNode> openList;
     ArrayList<AstarNode> closedList;
     FscoreComparator comparator;
+    
+    /*
+     *  some useful variables
+     */    
+    int noOfExpandedNodes;
+    int noOfRedirections;
+    
+    public Astar()
+    {
+        noOfExpandedNodes = 0;
+        noOfRedirections = 0;
+    }
     
     /*
      *  specify start and goal nodes
@@ -76,7 +82,6 @@ public abstract class Astar {
                     a.addSuccessor(entry.getKey().getFirst(), entry.getValue());
                 }
                 
-                nodeList.add(a);
             }
         }
     }
@@ -92,8 +97,9 @@ public abstract class Astar {
         openList = new PriorityQueue<>(1, comparator);                
         closedList = new ArrayList<>();
         openList.add(start);
+        noOfExpandedNodes = 0;
         
-        System.out.println("Start board position:");
+        System.out.println("Start:");
         start.printNode();
         System.out.println("Goal:");
         goal.printNode();
@@ -103,7 +109,9 @@ public abstract class Astar {
             AstarNode curnode = openList.poll();
             if (curnode.equals(goal)) 
             {                
-                System.out.println("Search was successful. The path:\n");
+                System.out.println("Search was successful."
+                        + "\nNumber of nodes expanded: " + noOfExpandedNodes
+                        +"\nThe path:\n");
                 ArrayList<AstarNode> path = reconstructPath(curnode.predecessor, curnode);
                 
                 // print out the path
@@ -118,8 +126,7 @@ public abstract class Astar {
             }
                         
             closedList.add(curnode);
-            curnode.printNode();
-            System.out.println("F-score: " + curnode.fscore);
+            noOfExpandedNodes++;
             
             /* 
              * get successors of curnode; and set all their scores             
@@ -129,7 +136,7 @@ public abstract class Astar {
             while (it.hasNext())
             {
                 AstarNode successor = it.next();
-                int temp_g_score = successor.gscore + successor.getSuccessorDistance(curnode);
+                int temp_g_score = successor.gscore + curnode.getSuccessorDistance(successor);
              
                 /*
                  * check if successor is in the closedList, and already has a better
@@ -146,6 +153,10 @@ public abstract class Astar {
                  */
                 if (!openList.contains(successor) || temp_g_score < successor.gscore)
                 {
+                    if (temp_g_score < successor.gscore)
+                    {
+                        
+                    }
                     successor.predecessor = curnode;
                     successor.gscore = temp_g_score;
                     successor.fscore = temp_g_score + heuristicEstimate(successor, goal);                    
@@ -155,7 +166,7 @@ public abstract class Astar {
                         openList.add(successor);                                        
                 }
                 
-            }
+            }            
         }
                 
         return false;

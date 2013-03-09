@@ -6,6 +6,7 @@ package astar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  *
@@ -30,6 +31,12 @@ public abstract class AstarNode {
      */
     public AstarNode predecessor;
     
+    public AstarNode()
+    {        
+        successors = new ArrayList<>();
+        successorDistance = new HashMap<>();
+    }
+    
     public void addSuccessor(AstarNode a, int dist)
     {
         successors.add(a);
@@ -44,13 +51,20 @@ public abstract class AstarNode {
     public ArrayList<AstarNode> getSuccessors()
     {
         if (successors == null || successors.isEmpty())
-            successors = computeSuccessors();
+        {
+            ArrayList<AstarNode> succ = computeSuccessors();
+            Iterator<AstarNode> i = succ.iterator();
+            while (i.hasNext())
+            {
+                this.addSuccessor(i.next(), 1);
+            }            
+        }
         return successors;
     }
     
     public int getSuccessorDistance(AstarNode a)
     {
-        return 1;
+        return successorDistance.get(a);
     }
     
     /*

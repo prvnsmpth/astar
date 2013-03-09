@@ -17,7 +17,7 @@ public class Dijkstra extends Astar {
         
     public Dijkstra(ArrayList<AstarNode> n)
     {
-        nodeList = n;
+        
     }
     
     @Override

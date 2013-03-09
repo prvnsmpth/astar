@@ -21,8 +21,6 @@ public class EightTilesNode extends AstarNode {
     public EightTilesNode()
     {
         board = new int[3][3];
-        successors = new ArrayList<>();
-        successorDistance = new HashMap<>();
         
         ArrayList<Integer> list = new ArrayList<>(
                 Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, EMPTY_TILE));
@@ -38,8 +36,6 @@ public class EightTilesNode extends AstarNode {
     public EightTilesNode(List<Integer> list)
     {
         board = new int[3][3];
-        successors = new ArrayList<>();
-        successorDistance = new HashMap<>();
         
         Iterator<Integer> it = list.iterator();
         for (int i = 0; i < 3; i++)
@@ -141,19 +137,17 @@ public class EightTilesNode extends AstarNode {
     @Override
     public void printNode() 
     {
-        System.out.println("---------");
+        System.out.println("+---+---+---+");
         for (int i = 0; i < 3; i++)
         {
+            System.out.print("|");
             for (int j = 0; j < 3; j++)
             {
-                System.out.print(board[i][j]);
-                System.out.print("\t");
+                System.out.print(" " + board[i][j] + " ");
+                System.out.print("|");
             }
-            System.out.println("\n");
-        }
-        System.out.println("---------");
-        
-        
+            System.out.println("\n+---+---+---+");
+        }                
     }
     
 }
