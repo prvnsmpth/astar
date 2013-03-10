@@ -6,7 +6,6 @@ package robot;
 
 import astar.AstarNode;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 import utils.Pair;
 

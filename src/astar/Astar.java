@@ -99,27 +99,27 @@ public abstract class Astar {
         openList.add(start);
         noOfExpandedNodes = 0;
         
-        System.out.println("Start:");
+        System.out.println("\nStart:");
         start.printNode();
-        System.out.println("Goal:");
+        System.out.println("\nGoal:");
         goal.printNode();
         
         while (!openList.isEmpty())
         {
             AstarNode curnode = openList.poll();
             if (curnode.equals(goal)) 
-            {                
-                System.out.println("Search was successful."
-                        + "\nNumber of nodes expanded: " + noOfExpandedNodes
-                        +"\nThe path:\n");
+            {            
                 ArrayList<AstarNode> path = reconstructPath(curnode.predecessor, curnode);
-                
+                System.out.print("\nSearch was successful."
+                        + "\nNumber of nodes expanded: " + noOfExpandedNodes
+                        + "\nNumber of parent pointer redirections: " + noOfRedirections
+                        +"\nThe path (length " + path.size() + "): \n\n");                
                 // print out the path
                 Iterator<AstarNode> it = path.iterator();
                 while (it.hasNext())
-                {
+                {                    
                     AstarNode node = it.next();
-                    node.printNode();
+                    node.printNode();   
                     System.out.println("\n");
                 }
                 return true;
@@ -153,13 +153,15 @@ public abstract class Astar {
                  */
                 if (!openList.contains(successor) || temp_g_score < successor.gscore)
                 {
-                    if (temp_g_score < successor.gscore)
+                    if (closedList.contains(successor) && temp_g_score < successor.gscore)
                     {
-                        
+                        /* increment redirection count */
+                        noOfRedirections++;
                     }
+                    
                     successor.predecessor = curnode;
                     successor.gscore = temp_g_score;
-                    successor.fscore = temp_g_score + heuristicEstimate(successor, goal);                    
+                    successor.fscore = temp_g_score + heuristicEstimate(successor, goal);                       
                     
                     /* if not in openList, add */
                     if (!openList.contains(successor))

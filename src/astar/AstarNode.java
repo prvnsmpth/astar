@@ -35,6 +35,7 @@ public abstract class AstarNode {
     {        
         successors = new ArrayList<>();
         successorDistance = new HashMap<>();
+        predecessor = null;
     }
     
     public void addSuccessor(AstarNode a, int dist)
