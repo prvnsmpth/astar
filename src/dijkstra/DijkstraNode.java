@@ -37,12 +37,18 @@ public class DijkstraNode extends AstarNode {
 
     @Override
     public boolean equals(Object o) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (o instanceof DijkstraNode){
+            DijkstraNode node = (DijkstraNode) o;
+            return (node.id == this.id);
+        }
+        return false;
     }
 
     @Override
     public int hashCode() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int hash = 5;
+        hash = 89 * hash + this.id;
+        return hash;
     }
 
 }
