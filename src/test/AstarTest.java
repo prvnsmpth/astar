@@ -58,12 +58,7 @@ public class AstarTest {
         dij.setGoal(D[4]);
         dij.buildNodeList(edges);
         dij.search();
-        
-        
-        
-        
-        
-        
+
         
 //        Pair<Integer, Integer> r = new Pair<>(0, 0);
 //        Pair<Integer, Integer> t = new Pair<>(9, 0);

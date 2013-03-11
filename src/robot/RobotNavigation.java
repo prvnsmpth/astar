@@ -16,7 +16,6 @@ import utils.Pair;
  */
 public class RobotNavigation extends Astar {
             
-    private Pair<Integer, Integer> startRobotCoords;
     public static final int STRAIGHT_LINE = 0;
     public static final int MANHATTAN = 1;
     private int heuristic;
@@ -35,7 +34,6 @@ public class RobotNavigation extends Astar {
         for (int i = 0; i < gridSize; i++)
             for (int j = 0; j < gridSize; j++)
                 SearchState.grid[i][j] = SearchState.OPEN;
-        this.startRobotCoords = robotCoords;
         this.heuristic = heuristic;
         
         this.setStart(new SearchState(robotCoords));

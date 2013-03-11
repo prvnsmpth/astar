@@ -58,28 +58,19 @@ public abstract class Astar {
      *  build the node list
      *  Useful for informed search
      */
-    public void buildNodeList(ArrayList<AstarNode> list, 
-            HashMap<Pair<AstarNode, AstarNode>, Integer> edges)            
+    public void buildNodeList(HashMap<Pair<AstarNode, AstarNode>, Integer> edges)            
     {
-        Iterator<AstarNode> i = list.iterator();
-        while (i.hasNext())
+        Iterator<Entry<Pair<AstarNode, AstarNode>, Integer>> it 
+                = edges.entrySet().iterator();
+        while (it.hasNext())
         {
-            AstarNode a = i.next();
-            Iterator<Entry<Pair<AstarNode, AstarNode>, Integer>> 
-                    j = edges.entrySet().iterator();
-            while (j.hasNext())
-            {
-                Entry<Pair<AstarNode, AstarNode>, Integer> entry = j.next();
-                if (entry.getKey().getFirst().equals(a))                        
-                {
-                    a.addSuccessor(entry.getKey().getSecond(), entry.getValue());
-                }
-                else if (entry.getKey().getSecond().equals(a))
-                {
-                    a.addSuccessor(entry.getKey().getFirst(), entry.getValue());
-                }
-                
-            }
+            Entry<Pair<AstarNode, AstarNode>, Integer> en = it.next();
+            AstarNode a = en.getKey().getFirst();
+            AstarNode b = en.getKey().getSecond();
+            Integer c = en.getValue();
+            
+            a.addSuccessor(b, c);
+            b.addSuccessor(a, c);
         }
     }
     
@@ -106,7 +97,7 @@ public abstract class Astar {
                 System.out.print("\nSearch was successful."
                         + "\nNumber of nodes expanded: " + noOfExpandedNodes
                         + "\nNumber of parent pointer redirections: " + noOfRedirections
-                        +"\nThe path (length " + path.size() + "): \n\n");                
+                        +"\nThe path (length " + curnode.gscore + "): \n\n");                
                 
                 /* print out the path */
                 Iterator<AstarNode> it = path.iterator();
@@ -130,7 +121,7 @@ public abstract class Astar {
             while (it.hasNext())
             {
                 AstarNode successor = it.next();
-                int temp_g_score = successor.gscore + curnode.getSuccessorDistance(successor);
+                int temp_g_score = curnode.gscore + curnode.getSuccessorDistance(successor);
              
                 /*
                  * check if successor is in the closedList, and already has a better
