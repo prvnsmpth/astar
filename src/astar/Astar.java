@@ -114,7 +114,8 @@ public abstract class Astar {
             noOfExpandedNodes++;
             
             /* 
-             * get successors of curnode; and set all their scores             
+             * get successors of curnode; and set all their scores    
+             * 
              */
             ArrayList<AstarNode> successors = curnode.getSuccessors();
             Iterator<AstarNode> it = successors.iterator();
@@ -127,10 +128,8 @@ public abstract class Astar {
                  * check if successor is in the closedList, and already has a better
                  * distance-from-start score
                  */
-                if (closedList.contains(successor) && temp_g_score >= successor.gscore)
-                {
-                    continue;
-                }
+                if (closedList.contains(successor) && temp_g_score >= successor.gscore)                
+                    continue;                
                 
                 /*
                  *  we update the g and h scores if the successor has not been 
@@ -139,9 +138,8 @@ public abstract class Astar {
                 if (!openList.contains(successor) || temp_g_score < successor.gscore)
                 {
                     if (closedList.contains(successor) && temp_g_score < successor.gscore)
-                    {
-                        /* increment redirection count */
-                        noOfRedirections++;
+                    {                        
+                        noOfRedirections++; /* increment redirection count */
                     }
                     
                     successor.predecessor = curnode;

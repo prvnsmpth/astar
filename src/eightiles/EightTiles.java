@@ -71,10 +71,13 @@ public class EightTiles extends Astar {
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
-            {                                                
+            {          
                 int tile = anode.getTileAt(i, j);
-                Pair<Integer, Integer> coord = bnode.getCoordinates(tile);
-                cost += Math.abs(coord.getFirst() - i) + Math.abs(coord.getSecond() - j);
+                if (tile != EightTilesNode.EMPTY_TILE)
+                {
+                    Pair<Integer, Integer> coord = bnode.getCoordinates(tile);
+                    cost += Math.abs(coord.getFirst() - i) + Math.abs(coord.getSecond() - j);
+                }
             }
         }
         return cost;
@@ -92,9 +95,11 @@ public class EightTiles extends Astar {
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
-            {   
-                if (anode.getTileAt(i, j) != bnode.getTileAt(i, j))
-                    cost++;
+            {                   
+                if (anode.getTileAt(i, j) == EightTilesNode.EMPTY_TILE)
+                    continue;
+                if (anode.getTileAt(i, j) != bnode.getTileAt(i, j))                    
+                        cost++;
             }
         }
         
