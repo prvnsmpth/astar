@@ -166,15 +166,11 @@ public class SearchState extends AstarNode {
     public void printNode()
     {
         // mark all ancestor directions
-        AstarNode pred = predecessor;
-        SearchState _this = this;
-        while (pred != null)
+        SearchState s = (SearchState) predecessor;    
+        if (s != null)
         {
-            SearchState s = (SearchState) pred;            
-            Pair<Integer, Integer> c = s.getRobotCoords();
-            grid[c.getFirst()][c.getSecond()] = (int) orientation(s, _this);
-            _this = s;
-            pred = s.predecessor;
+            Pair<Integer, Integer> c = s.getRobotCoords();        
+            grid[c.getFirst()][c.getSecond()] = (int) orientation(s, this);  
         }
         
         String sep = "+";

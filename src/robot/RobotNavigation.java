@@ -47,14 +47,23 @@ public class RobotNavigation extends Astar {
         this.heuristic = h;
     }
     
-    public void setWall(ArrayList<Pair<Integer, Integer>> wall)
+    public void setWall(Pair<Integer, Integer> p1, Pair<Integer, Integer> p2)
     {
-        Iterator<Pair<Integer, Integer>> i = wall.iterator();
-        while (i.hasNext())
+        if (p1.getFirst() == p2.getFirst())
         {
-            Pair<Integer, Integer> coord = i.next();
-            SearchState.grid[coord.getFirst()][coord.getSecond()] 
-                    = SearchState.BLOCKED;
+            int a = Math.min(p1.getSecond(), p2.getSecond());
+            int b = Math.max(p1.getSecond(), p2.getSecond());            
+            for (int i = a; i <= b; i++)
+                SearchState.grid[p1.getFirst()][i] = 
+                        SearchState.BLOCKED;
+        }
+        else if (p1.getSecond() == p2.getSecond())
+        {
+            int a = Math.min(p1.getFirst(), p2.getFirst());
+            int b = Math.max(p1.getFirst(), p2.getFirst()); 
+            for (int i = a; i <= b; i++)
+                SearchState.grid[i][p1.getSecond()] = 
+                        SearchState.BLOCKED;
         }
     }
     

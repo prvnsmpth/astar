@@ -43,26 +43,23 @@ public abstract class Astar {
     {
         noOfExpandedNodes = 0;
         noOfRedirections = 0;
+        comparator = new FscoreComparator();
+        openList = new PriorityQueue<>(1, comparator);                
+        closedList = new ArrayList<>();
     }
     
     /*
      *  specify start and goal nodes
      */
-    public void setStart(AstarNode a)
-    {
-        start = a;
-    }
-    
-    public void setGoal(AstarNode a)
-    {
-        goal = a;
-    }
+    public void setStart(AstarNode a) { start = a; }    
+    public void setGoal(AstarNode a) { goal = a; }    
     
     /*
      *  build the node list
      *  Useful for informed search
      */
-    public void buildNodeList(ArrayList<AstarNode> list, HashMap<Pair<AstarNode, AstarNode>, Integer> edges)            
+    public void buildNodeList(ArrayList<AstarNode> list, 
+            HashMap<Pair<AstarNode, AstarNode>, Integer> edges)            
     {
         Iterator<AstarNode> i = list.iterator();
         while (i.hasNext())
@@ -88,16 +85,12 @@ public abstract class Astar {
     
     
     /*
-     *  Search for the goal node using Astar search algorithm.
+     *  Search for the goal node using the A* search algorithm.
      *  Returns true on successful search, false on failure 
      */
     public boolean search()
-    {        
-        comparator = new FscoreComparator();
-        openList = new PriorityQueue<>(1, comparator);                
-        closedList = new ArrayList<>();
+    {                
         openList.add(start);
-        noOfExpandedNodes = 0;
         
         System.out.println("\nStart:");
         start.printNode();
@@ -114,7 +107,8 @@ public abstract class Astar {
                         + "\nNumber of nodes expanded: " + noOfExpandedNodes
                         + "\nNumber of parent pointer redirections: " + noOfRedirections
                         +"\nThe path (length " + path.size() + "): \n\n");                
-                // print out the path
+                
+                /* print out the path */
                 Iterator<AstarNode> it = path.iterator();
                 while (it.hasNext())
                 {                    
@@ -148,8 +142,8 @@ public abstract class Astar {
                 }
                 
                 /*
-                 * we update the g and h scores if the successor has not been 
-                 * seen yet or we have found a better gscore
+                 *  we update the g and h scores if the successor has not been 
+                 *  seen yet or we have found a better gscore
                  */
                 if (!openList.contains(successor) || temp_g_score < successor.gscore)
                 {
@@ -170,7 +164,9 @@ public abstract class Astar {
                 
             }            
         }
-                
+        
+        /* Search failed */
+        System.out.println("\nGoal cannot be reached from the given start node.\n");
         return false;
     }
     
