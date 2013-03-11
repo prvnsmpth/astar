@@ -6,6 +6,7 @@ package astar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.PriorityQueue;
@@ -30,7 +31,7 @@ public abstract class Astar {
      *  the open and closed lists
      */
     PriorityQueue<AstarNode> openList;
-    ArrayList<AstarNode> closedList;
+    HashSet<AstarNode> closedList;
     FscoreComparator comparator;
     
     /*
@@ -45,7 +46,7 @@ public abstract class Astar {
         noOfRedirections = 0;
         comparator = new FscoreComparator();
         openList = new PriorityQueue<>(1, comparator);                
-        closedList = new ArrayList<>();
+        closedList = new HashSet<>();
     }
     
     /*
