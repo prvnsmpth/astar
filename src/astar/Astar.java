@@ -153,7 +153,7 @@ public abstract class Astar {
                         openList.add(successor);                                        
                 }
                 
-            }            
+            }                
         }
         
         /* Search failed */

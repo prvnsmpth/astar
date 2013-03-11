@@ -143,7 +143,10 @@ public class EightTilesNode extends AstarNode {
             System.out.print("|");
             for (int j = 0; j < 3; j++)
             {
-                System.out.print(" " + board[i][j] + " ");
+                if (board[i][j] != 0)
+                    System.out.print(" " + board[i][j] + " ");
+                else
+                    System.out.print(" X ");
                 System.out.print("|");
             }
             System.out.println("\n+---+---+---+");
