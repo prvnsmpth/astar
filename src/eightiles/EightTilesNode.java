@@ -16,7 +16,7 @@ public class EightTilesNode extends AstarNode {
     
     public static final int EMPTY_TILE = 0;
     private static final int EDGE = 2;
-    int[][] board;                                 
+    int[][] board;                         
     
     public EightTilesNode()
     {
@@ -41,6 +41,12 @@ public class EightTilesNode extends AstarNode {
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
                 board[i][j] = it.next();
+    }
+    public EightTilesNode(EightTilesNode node){
+        board = new int[3][3];
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
+                board[i][j] = node.getTileAt(i, j);
     }
     
     public int getTileAt(int i, int j)
@@ -153,4 +159,8 @@ public class EightTilesNode extends AstarNode {
         }                
     }
     
+    @Override
+    public EightTilesNode clone(){
+        return new EightTilesNode(this);
+    }
 }

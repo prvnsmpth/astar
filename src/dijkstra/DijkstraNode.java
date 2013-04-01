@@ -14,17 +14,15 @@ import java.util.HashMap;
  */
 public class DijkstraNode extends AstarNode {
     
-    public int id;    
-    
     public DijkstraNode(int id)
     {
-        this.id = id; 
+        this.id = id;
         successors = new ArrayList<>();
         successorDistance = new HashMap<>();
-    }    
+    }
     
     @Override
-    public ArrayList<AstarNode> computeSuccessors() 
+    public ArrayList<AstarNode> computeSuccessors()
     {
         return successors;
     }
@@ -49,6 +47,11 @@ public class DijkstraNode extends AstarNode {
         int hash = 5;
         hash = 89 * hash + this.id;
         return hash;
+    
+    }
+    @Override
+    public DijkstraNode clone(){
+        return new DijkstraNode(this.id);
     }
 
 }

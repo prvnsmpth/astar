@@ -40,6 +40,12 @@ public class RobotNavigation extends Astar {
         this.setGoal(new SearchState(targetCoords));
     }
     
+    public RobotNavigation(RobotNavigation rn){
+        this.setStart( rn.getStart().clone() );
+        this.setGoal( rn.getGoal().clone() );
+        this.heuristic = rn.heuristic;
+    }
+    
     public void setHeuristic(int h)
     {
         this.heuristic = h;
@@ -99,6 +105,10 @@ public class RobotNavigation extends Astar {
             return manhattanDistance(a, b);
         
         return 0;
+    }
+    @Override
+    public Astar clone() {
+        return new RobotNavigation(this);
     }
     
 }

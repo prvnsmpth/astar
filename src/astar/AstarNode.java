@@ -21,6 +21,7 @@ public abstract class AstarNode {
      */
     public int gscore;
     public int fscore;
+    protected int id;
     
     protected ArrayList<AstarNode> successors; 
     protected HashMap<AstarNode, Integer> successorDistance;
@@ -30,12 +31,14 @@ public abstract class AstarNode {
      *  Needed to retrace path once search completes.
      */
     public AstarNode predecessor;
+    public int predecessorMode;
     
     public AstarNode()
     {        
         successors = new ArrayList<>();
         successorDistance = new HashMap<>();
         predecessor = null;
+        predecessorMode = -1;
     }
     
     public void addSuccessor(AstarNode a, int dist)
@@ -68,6 +71,8 @@ public abstract class AstarNode {
         return successorDistance.get(a);
     }
     
+    public int getId() {return id; }
+    
     /*
      *  abstract functions to be over-riden by implementations.
      */        
@@ -77,5 +82,7 @@ public abstract class AstarNode {
     public abstract boolean equals(Object o);
     @Override
     public abstract int hashCode();
+    @Override
+    public abstract AstarNode clone();
     
 }

@@ -34,6 +34,9 @@ public class SearchState extends AstarNode {
     {
         this.robotCoords = robotCoords;
     }
+    public SearchState(SearchState s){
+        this.robotCoords = s.getRobotCoords();
+    }
     
     @Override
     public ArrayList<AstarNode> computeSuccessors()
@@ -215,6 +218,11 @@ public class SearchState extends AstarNode {
         int hash = 7;
         hash = 13 * hash + Objects.hashCode(this.robotCoords);
         return hash;
+    }
+    
+    @Override
+    public SearchState clone(){
+        return new SearchState(this);
     }
 
 }
