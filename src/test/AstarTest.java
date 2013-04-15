@@ -32,11 +32,11 @@ public class AstarTest {
         
         EightTiles E = new EightTiles(
                 new ArrayList<>(Arrays.asList(1,7,3,5,6,8,2,EightTilesNode.EMPTY_TILE,4)), 
-                EightTiles.DISPLACED_TILES_RANDOM);
+                EightTiles.DISPLACED_TILES);
         
         EightTiles E2 = new EightTiles(
                 new ArrayList<>(Arrays.asList(1,7,3,5,6,8,2,EightTilesNode.EMPTY_TILE,4)), 
-                EightTiles.MANHATTAN_RANDOM);
+                EightTiles.MANHATTAN);
         
         /*
         EightTiles E = new EightTiles(
